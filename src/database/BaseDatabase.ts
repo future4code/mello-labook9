@@ -2,11 +2,14 @@ import knex from "knex";
 import Knex from "knex";
 
 export default abstract class BaseDB {
+  static destroyConnection() {
+    throw new Error("Method not implemented.");
+  }
 
-  private static connection: Knex | null = null
+  private static connection: Knex | null = null;
 
-  public getConnection (): Knex {
-    if(!BaseDB.connection) {
+  public getConnection(): Knex {
+    if (!BaseDB.connection) {
       BaseDB.connection = knex({
         client: "mysql",
         connection: {
@@ -14,17 +17,17 @@ export default abstract class BaseDB {
           port: 3306,
           user: process.env.DB_USER,
           password: process.env.DB_PASSWORD,
-          database: process.env.DB_NAME
-        }
-      })
+          database: process.env.DB_NAME,
+        },
+      });
     }
-    return BaseDB.connection
+    return BaseDB.connection;
   }
 
   public async destroyConnection(): Promise<void> {
-    if(BaseDB.connection) {
-      await BaseDB.connection.destroy()
-      BaseDB.connection = null
+    if (BaseDB.connection) {
+      await BaseDB.connection.destroy();
+      BaseDB.connection = null;
     }
   }
 }
