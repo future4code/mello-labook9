@@ -1,10 +1,11 @@
 import knex from "knex";
+import Knex from "knex";
 
 export default abstract class BaseDB {
 
-  private static connection: knex | null = null
+  private static connection: Knex | null = null
 
-  public getConnection () {
+  public getConnection (): Knex {
     if(!BaseDB.connection) {
       BaseDB.connection = knex({
         client: "mysql",
@@ -20,7 +21,7 @@ export default abstract class BaseDB {
     return BaseDB.connection
   }
 
-  public async destroyConnection() {
+  public async destroyConnection(): Promise<void> {
     if(BaseDB.connection) {
       await BaseDB.connection.destroy()
       BaseDB.connection = null
