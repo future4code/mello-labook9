@@ -1,14 +1,13 @@
-import PostsDB from "../database/PostDatabase"
-import { toUserType } from "../models/Post"
+import PostsDB from "../database/PostDatabase";
+import { toUserType } from "../model/Post";
 
 export default class PostBusiness {
-
-  async getPostByType (type: string) {
+  async getPostByType(type: string) {
     const postType = await new PostsDB().getFeedType(toUserType(type));
-    return postType
+    return postType;
   }
 
-  async getFeed (id: string) {
-    return await new PostsDB().getFeed(id)
+  async getFeed(id: string) {
+    return await new PostsDB().getFeed(id);
   }
 }
