@@ -47,7 +47,6 @@ export class UserBusiness {
     }
 
     const token = Authenticator.generateToken({ id: user.id });
-
     return token;
   }
 }

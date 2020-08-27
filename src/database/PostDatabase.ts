@@ -12,7 +12,7 @@ export default class PostsDB extends BaseDB {
         dbResult.id,
         dbResult.photo,
         dbResult.description,
-        moment.unix(dbResult.created_at).format("DD/MM/YYYY"),
+        moment(dbResult.created_at).format("DD/MM/YYYY"),
         dbResult.type,
         dbResult.user_id
       )
@@ -22,10 +22,12 @@ export default class PostsDB extends BaseDB {
   public async getFeed(id: string): Promise<Post[]> {
     const result = await this.getConnection().raw(
       `SELECT * FROM Post_Labook p
-      JOIN Friends f on xxxx = p.user_id
-      WHERE xxxx = "${id}"
+      JOIN Relation_Labook rl ON rl.id_user_followed = p.user_id
+      WHERE rl.id_user_following = "${id}"
       ORDER BY p.created_at DESC`
     );
+
+    this.destroyConnection();
     return result[0].map((post: any) => {
       return this.toModel(post);
     }) as Post[];
@@ -38,6 +40,7 @@ export default class PostsDB extends BaseDB {
       .where({ type })
       .orderBy("created_at", "desc");
 
+    this.destroyConnection();
     return result.map((post) => {
       return this.toModel(post);
     }) as Post[];
@@ -54,5 +57,6 @@ export default class PostsDB extends BaseDB {
         user_id: post.getUserId(),
       })
       .into(PostsDB.TABLE_NAME);
+    this.destroyConnection();
   }
 }

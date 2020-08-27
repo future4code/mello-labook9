@@ -13,6 +13,7 @@ export class FriendshipDatabase extends BaseDB {
         id_user_followed: userToFollowId,
       })
       .into(FriendshipDatabase.TABLE_NAME);
+    this.destroyConnection();
   }
 
   public async undoFriendship(
@@ -30,5 +31,6 @@ export class FriendshipDatabase extends BaseDB {
         id_user_following: userToFollowId,
         id_user_followed: userId,
       });
+    this.destroyConnection();
   }
 }
