@@ -27,8 +27,7 @@ export class UserBusiness {
     const userDatabase = new UserDatabase();
     await userDatabase.createUser(id, name, email, hashPassword);
 
-    const authenticator = new Authenticator();
-    const token = authenticator.generateToken({ id });
+    const token = Authenticator.generateToken({ id });
 
     return token;
   }
@@ -47,8 +46,7 @@ export class UserBusiness {
       throw new Error("Usuário ou senha errados!");
     }
 
-    const authenticator = new Authenticator();
-    const token = authenticator.generateToken({ id: user.id });
+    const token = Authenticator.generateToken({ id: user.id });
 
     return token;
   }

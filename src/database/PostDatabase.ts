@@ -42,4 +42,17 @@ export default class PostsDB extends BaseDB {
       return this.toModel(post);
     }) as Post[];
   }
+
+  public async createPost(post: Post): Promise<void> {
+    await this.getConnection()
+      .insert({
+        id: post.getId(),
+        photo: post.getPhoto(),
+        description: post.getDescription(),
+        created_at: post.getCreatedAt(),
+        type: post.getType(),
+        user_id: post.getUserId(),
+      })
+      .into(PostsDB.TABLE_NAME);
+  }
 }
