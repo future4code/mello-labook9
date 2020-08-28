@@ -17,4 +17,4 @@ userRouter.delete("/undofriendship", friendshipController.undoFriendship);
 
 userRouter.post("/createpost", postController.createPost);
 userRouter.get("/getbytype", postController.getPostsByType);
-userRouter.get("/getfeed", postController.getFeed);
+userRouter.get("/feed", postController.getFeed);

@@ -18,6 +18,8 @@ export class UserDatabase extends BaseDatabase {
         password,
       })
       .into(UserDatabase.TABLE_NAME);
+
+    this.destroyConnection();
   }
 
   public async getUserByEmail(email: string): Promise<any> {
@@ -25,7 +27,7 @@ export class UserDatabase extends BaseDatabase {
       .select("*")
       .from(UserDatabase.TABLE_NAME)
       .where({ email });
-
+    this.destroyConnection();
     return result[0];
   }
 
@@ -35,6 +37,7 @@ export class UserDatabase extends BaseDatabase {
       .from(UserDatabase.TABLE_NAME)
       .where({ id });
 
+    this.destroyConnection();
     return result[0];
   }
 }

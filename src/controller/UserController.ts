@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { UserBusiness } from "../business/UserBusiness";
-import BaseDatabase from "../database/BaseDatabase";
+import BaseDB from "../database/BaseDatabase";
 
 export default class UserController {
   async signUp(req: Request, res: Response) {
@@ -20,8 +20,6 @@ export default class UserController {
       res.status(400).send({
         message: error.message,
       });
-    } finally {
-      BaseDatabase.destroyConnection();
     }
   }
 
@@ -41,8 +39,6 @@ export default class UserController {
       res.status(400).send({
         message: error.message,
       });
-    } finally {
-      BaseDatabase.destroyConnection();
     }
   }
 }
