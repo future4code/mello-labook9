@@ -59,4 +59,14 @@ export default class PostsDB extends BaseDB {
       .into(PostsDB.TABLE_NAME);
     this.destroyConnection();
   }
+
+  public async getPostById(postId: string): Promise<any> {
+    const result = await this.getConnection()
+      .select("*")
+      .from(PostsDB.TABLE_NAME)
+      .where({ id: postId });
+
+    this.destroyConnection();
+    return result[0];
+  }
 }
